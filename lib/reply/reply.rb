@@ -1,5 +1,5 @@
 class Reply
-  attr_accessor :status, :messages, :data
+  attr_accessor :status, :code, :messages, :data
 
   STATUS_ERROR = 0
   STATUS_SUCCESS = 1
@@ -9,6 +9,7 @@ class Reply
     @messages = params[:messages] || []
     @status = params[:status] || STATUS_SUCCESS
     @data = params[:data] || {}
+    @code = params[:code] || nil
   end
 
   def clear_messages
