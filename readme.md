@@ -8,6 +8,7 @@ A simple class used to encapsulate the reply from a service
 Usage
 -----
 
+```ruby
   reply = Reply.new
 
   # add message
@@ -41,3 +42,8 @@ Usage
 
   # add some data to the reply
   reply.data = something
+```
+
+Copyright
+---------
+Copyright © 2013 Sebastian Porto. See LICENSE.txt for further details.
