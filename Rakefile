@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "reply"
   gem.homepage = "http://github.com/sporto/reply"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: An standarized reply object}
-  gem.description = %Q{TODO: An standarized reply object}
+  gem.summary = %Q{An standarized reply object}
+  gem.description = %Q{An standarized reply object}
   gem.email = "s@porto5.com"
   gem.authors = ["Sebastian Porto"]
   # dependencies defined in Gemfile
