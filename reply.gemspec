@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sebastian Porto"]
   s.date = "2013-09-25"
-  s.description = "TODO: An standarized reply object"
+  s.description = "An standarized reply object"
   s.email = "s@porto5.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "lib/reply.rb",
+    "reply.gemspec",
     "test/helper.rb",
     "test/test_reply.rb"
   ]
@@ -31,7 +32,7 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.25"
-  s.summary = "TODO: An standarized reply object"
+  s.summary = "An standarized reply object"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
