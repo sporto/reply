@@ -42,6 +42,13 @@ Usage
 
   # add some data to the reply
   reply.data = something
+
+  # add a status to the reply
+  # this is independent of success, error and warning
+  reply.status = 401
+
+  # copy all the errors from an active record object
+  reply.replace_messages_with_errors_for(active_record_object)
 ```
 
 Copyright

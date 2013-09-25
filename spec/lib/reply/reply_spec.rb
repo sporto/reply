@@ -12,14 +12,70 @@ describe Reply do
   end
 
   let(:reply) { Reply.new }
-  let(:invalid_object) { Monkey.new }
 
-  it "is invalid" do
-    expect(invalid_object).not_to be_valid
+  describe '.simple_status' do
+
+    it "is successful by default" do
+      expect(reply).to be_successful
+    end
+
+    it 'can be set in the initialiser' do
+      reply = Reply.new(simple_status: 0)
+      expect(reply).to be_error
+    end
+
+    it 'can be set' do
+      reply.simple_status = 2
+      expect(reply).to be_warning
+    end
+
+    it 'rejects unknown' do
+      expect{ reply.simple_status = 4 }.to raise_error
+    end
   end
 
-  it "is successful by default" do
-    expect(reply).to be_successful
+  describe '.status' do
+    it 'can be set in the initialiser' do
+      reply = Reply.new(status: 401)
+      expect(reply.status).to eq(401)
+    end
+
+    it 'can be set' do
+      reply.status = 400
+      expect(reply.status).to eq(400)
+    end
+  end
+
+  describe '.replace_messages' do
+
+    it 'accepts an array' do
+      arr = [1,2]
+      reply.replace_messages(arr)
+      expect(reply.messages).to eq(arr)
+    end
+
+    it 'accepts a string' do
+      str = 'x'
+      reply.replace_messages(str)
+      expect(reply.messages).to eq([str])
+    end
+
+  end
+
+  describe '.add_messages' do
+
+    it 'accepts an array' do
+      arr = [1,2]
+      reply.add_messages(arr)
+      expect(reply.messages).to eq(arr)
+    end
+
+    it 'accepts a string' do
+      str = 'x'
+      reply.add_messages(str)
+      expect(reply.messages).to eq([str])
+    end
+
   end
 
   describe ".add_error" do
@@ -50,14 +106,17 @@ describe Reply do
     end
   end
 
-  describe ".replace_messages_with_errors_for" do
-    before do
-      invalid_object.valid?
-      reply.replace_messages_with_errors_for(invalid_object)
+  describe ".mark_as_success" do
+    it "marks the reply as success" do
+      reply.mark_as_success
+      expect(reply).to be_successful
     end
+  end
 
-    it "copies the messages" do
-      expect(reply.messages.size).to eq(1)
+  describe ".success!" do
+    it "marks the reply as success" do
+      reply.success!
+      expect(reply).to be_successful
     end
   end
 
@@ -75,20 +134,6 @@ describe Reply do
     end
   end
 
-  describe ".mark_as_success" do
-    it "marks the reply as success" do
-      reply.mark_as_success
-      expect(reply).to be_successful
-    end
-  end
-
-  describe ".success!" do
-    it "marks the reply as success" do
-      reply.success!
-      expect(reply).to be_successful
-    end
-  end
-
   describe ".mark_as_warning" do
     it "marks the reply as warning" do
       reply.mark_as_warning
@@ -102,5 +147,23 @@ describe Reply do
       expect(reply).to be_warning
     end
   end
+
+  describe ".replace_messages_with_errors_for" do
+    let(:invalid_object) { Monkey.new }
+
+    before do
+      invalid_object.valid?
+      reply.replace_messages_with_errors_for(invalid_object)
+    end
+
+    it "is invalid" do
+      expect(invalid_object).not_to be_valid
+    end
+
+    it "copies the messages" do
+      expect(reply.messages.size).to eq(1)
+    end
+  end
+
 
 end
