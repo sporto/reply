@@ -1,7 +1,7 @@
 Reply
 ======
 
-A simple class used to encapsulate the reply from a service
+A simple class used to encapsulate the reply from a service / interactor
 
 [![Build Status](https://travis-ci.org/sporto/reply.png)](https://travis-ci.org/sporto/reply)
 
@@ -29,8 +29,14 @@ Usage
   # add error message and mark as error at the same time
   reply.add_error("Something bad happend")
 
-  # add erroor messages and mark as error
+  # add error messages and mark as error
   reply.add_error(["Error 1", "Error 2"])
+
+  # reply.error! also accepts an optional message
+  reply.error!("I don't like you")
+
+  # reply.error returns the reply itself, so you can do one liners like:
+  return reply.error!("Didn't work")
 
   # check if reply was successful
   reply.successful?
@@ -51,6 +57,25 @@ Usage
   reply.replace_messages_with_errors_for(active_record_object)
 ```
 
+Testing
+--------
+
+  rake spec
+
+or
+
+  guard start
+
+Release
+------
+
+This gem uses jeweler
+https://github.com/technicalpickles/jeweler
+
+  rake version:bump:minor
+  rake release
+
+
 Copyright
 ---------
-Copyright © 2013 Sebastian Porto. See LICENSE.txt for further details.
+Copyright © 2014 Sebastian Porto. See LICENSE.txt for further details.

@@ -113,24 +113,39 @@ describe Reply do
     end
   end
 
-  describe ".success!" do
+  describe "#success!" do
     it "marks the reply as success" do
       reply.success!
       expect(reply).to be_successful
     end
   end
 
-  describe ".mark_as_error" do
+  describe "#mark_as_error" do
     it "marks the reply as error" do
       reply.mark_as_error
       expect(reply).to be_failure
     end
+
+    it "returns the reply" do
+      expect(reply.mark_as_error).to eq(reply)
+    end
+
+    it "accepts an optional message" do
+      err = "XYZ"
+      reply.mark_as_error(err)
+      expect(reply.messages).to include(err)
+    end
   end
 
-  describe ".error!" do
-    it "marks the reply as error" do
-      reply.error!
-      expect(reply).to be_failure
+  describe "#error!" do
+    it 'delegates to mark_as_error' do
+      expect(reply.method(:error!)).to eq(reply.method(:mark_as_error))
+    end
+  end
+
+  describe "#fail!" do
+    it 'delegates to mark_as_error' do
+      expect(reply.method(:fail!)).to eq(reply.method(:mark_as_error))
     end
   end
 

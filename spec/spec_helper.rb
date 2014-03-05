@@ -4,6 +4,7 @@
 # loaded once.
 
 require 'active_attr'
+require 'bogus/rspec'
 
 require File.expand_path('../../lib/reply', __FILE__)
 #

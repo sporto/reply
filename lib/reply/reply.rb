@@ -55,10 +55,13 @@ class Reply
   end
   alias :success! :mark_as_success
 
-  def mark_as_error
+  def mark_as_error(msg=nil)
     @simple_status = SIMPLE_STATUS_ERROR
+    add_errors(msg) if msg
+    self
   end
   alias :error! :mark_as_error
+  alias :fail! :mark_as_error
 
   def mark_as_warning
     @simple_status = SIMPLE_STATUS_WARNING
