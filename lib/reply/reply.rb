@@ -50,8 +50,10 @@ class Reply
   end
   alias :add_error :add_errors
 
-  def mark_as_success
+  def mark_as_success(msg=nil)
     @simple_status = SIMPLE_STATUS_SUCCESS
+    add_messages(msg) if msg
+    self
   end
   alias :success! :mark_as_success
 
@@ -63,8 +65,10 @@ class Reply
   alias :error! :mark_as_error
   alias :fail! :mark_as_error
 
-  def mark_as_warning
+  def mark_as_warning(msg=nil)
     @simple_status = SIMPLE_STATUS_WARNING
+    add_messages(msg) if msg
+    self
   end
   alias :warning! :mark_as_warning
 

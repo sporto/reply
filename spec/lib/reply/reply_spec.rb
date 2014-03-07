@@ -13,7 +13,7 @@ describe Reply do
 
   let(:reply) { Reply.new }
 
-  describe '.simple_status' do
+  describe '#simple_status' do
 
     it "is successful by default" do
       expect(reply).to be_successful
@@ -34,7 +34,7 @@ describe Reply do
     end
   end
 
-  describe '.status' do
+  describe '#status' do
     it 'can be set in the initialiser' do
       reply = Reply.new(status: 401)
       expect(reply.status).to eq(401)
@@ -46,7 +46,7 @@ describe Reply do
     end
   end
 
-  describe '.replace_messages' do
+  describe '#replace_messages' do
 
     it 'accepts an array' do
       arr = [1,2]
@@ -59,10 +59,9 @@ describe Reply do
       reply.replace_messages(str)
       expect(reply.messages).to eq([str])
     end
-
   end
 
-  describe '.add_messages' do
+  describe '#add_messages' do
 
     it 'accepts an array' do
       arr = [1,2]
@@ -78,7 +77,7 @@ describe Reply do
 
   end
 
-  describe ".add_error" do
+  describe "#add_error" do
     before do
       reply.add_error("Error")
     end
@@ -92,7 +91,7 @@ describe Reply do
     end
   end
 
-  describe ".add_errors" do
+  describe '#add_errors' do
     before do
       reply.add_errors(["Error", "Another Error"])
     end
@@ -106,27 +105,36 @@ describe Reply do
     end
   end
 
-  describe ".mark_as_success" do
+  describe '#mark_as_success' do
     it "marks the reply as success" do
       reply.mark_as_success
       expect(reply).to be_successful
     end
-  end
 
-  describe "#success!" do
-    it "marks the reply as success" do
-      reply.success!
-      expect(reply).to be_successful
+    it "returns self" do
+      expect(reply.mark_as_success).to eq(reply)
+    end
+
+    it 'accepts a message' do
+      msg = "XYZ"
+      reply.mark_as_success(msg)
+      expect(reply.messages).to include(msg)
+    end
+
+    it 'doesnt remove previous messages' do
+      reply.mark_as_success('a')
+      reply.mark_as_success('b')
+      expect(reply.messages.count).to eq(2)
     end
   end
 
-  describe "#mark_as_error" do
+  describe '#mark_as_error' do
     it "marks the reply as error" do
       reply.mark_as_error
       expect(reply).to be_failure
     end
 
-    it "returns the reply" do
+    it "returns self" do
       expect(reply.mark_as_error).to eq(reply)
     end
 
@@ -135,35 +143,62 @@ describe Reply do
       reply.mark_as_error(err)
       expect(reply.messages).to include(err)
     end
+
+    it 'doesnt remove previous messages' do
+      reply.mark_as_error('a')
+      reply.mark_as_error('b')
+      expect(reply.messages.count).to eq(2)
+    end
   end
 
-  describe "#error!" do
+  describe '#mark_as_warning' do
+    it "marks the reply as warning" do
+      reply.mark_as_warning
+      expect(reply).to be_warning
+    end
+
+    it "returns self" do
+      expect(reply.mark_as_warning).to eq(reply)
+    end
+
+    it 'accepts a message' do
+      msg = "XYZ"
+      reply.mark_as_warning(msg)
+      expect(reply.messages).to include(msg)
+    end
+
+    it 'doesnt remove previous messages' do
+      reply.mark_as_warning('a')
+      reply.mark_as_warning('b')
+      expect(reply.messages.count).to eq(2)
+    end
+  end
+
+  describe '#success!' do
+    it "delegates to mark_as_success" do
+      expect(reply.method(:success!)).to eq(reply.method(:mark_as_success))
+    end
+  end
+
+  describe '#error!' do
     it 'delegates to mark_as_error' do
       expect(reply.method(:error!)).to eq(reply.method(:mark_as_error))
     end
   end
 
-  describe "#fail!" do
+  describe '#fail!' do
     it 'delegates to mark_as_error' do
       expect(reply.method(:fail!)).to eq(reply.method(:mark_as_error))
     end
   end
 
-  describe ".mark_as_warning" do
-    it "marks the reply as warning" do
-      reply.mark_as_warning
-      expect(reply).to be_warning
+  describe '#warning!' do
+    it "delegates to mark_as_warning" do
+      expect(reply.method(:warning!)).to eq(reply.method(:mark_as_warning))
     end
   end
 
-  describe ".warning!" do
-    it "marks the reply as warning" do
-      reply.warning!
-      expect(reply).to be_warning
-    end
-  end
-
-  describe ".replace_messages_with_errors_for" do
+  describe '#replace_messages_with_errors_for' do
     let(:invalid_object) { Monkey.new }
 
     before do
@@ -179,6 +214,5 @@ describe Reply do
       expect(reply.messages.size).to eq(1)
     end
   end
-
 
 end

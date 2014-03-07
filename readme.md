@@ -32,7 +32,7 @@ Usage
   # add error messages and mark as error
   reply.add_error(["Error 1", "Error 2"])
 
-  # reply.error! also accepts an optional message
+  # reply.error! .success!, .warning! also accept an optional message
   reply.error!("I don't like you")
 
   # reply.error returns the reply itself, so you can do one liners like:
